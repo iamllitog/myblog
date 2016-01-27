@@ -1,0 +1,64 @@
+@import "compass";
+@import "/internalM/publicAsset/base";
+
+
+//主体部分
+.mainArea{
+  margin:0 auto !important;
+}
+
+//文章列表
+.articleList{
+  min-height: 550px;
+  border-right: 1.5px dotted $borderColor;
+  .item{
+    .image {
+      width: pxTorem(140px) !important;
+    }
+    .content{
+      padding-top: pxTorem(6px) !important;
+    }
+  }
+}
+
+//分页部分
+.page{
+  justify-content: center;
+  display: flex;
+}
+
+//左侧标签栏
+.tab{
+  @include border-radius(10px);
+  background-color: #EEA9B8;
+  margin-bottom: pxTorem(25px);
+  h3{
+    border-bottom: 1px solid $borderColor;
+    padding: pxTorem(15px) pxTorem(20px);
+  }
+  p{
+    padding-bottom: pxTorem(5px);
+    margin: 0;
+    text-align: center;
+    font-size: pxTorem(16px);
+
+  }
+}
+
+//关于我部分
+.masterInfo{
+  >.masterHead{
+    width: 40%;
+    height: auto;
+    text-align: center;
+    margin: 0 auto pxTorem(10px);
+  }
+}
+
+//文章标签部分
+.articleLabel{
+  p{
+    padding-left: pxTorem(20px);
+    text-align: left;
+  }
+}

@@ -1,0 +1,9 @@
+@import "/internalM/publicAsset/field";
+
+.bodyHeader{
+  border-bottom: 1px solid $borderColor;
+  margin: pxTorem(40px) 0 pxTorem(30px) 0 !important;
+  padding-bottom: pxTorem(15px);
+  font-size: pxTorem(20px);
+  font-weight: normal;
+}

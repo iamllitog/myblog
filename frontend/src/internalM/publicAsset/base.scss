@@ -1,0 +1,9 @@
+@import 'field';
+
+//基本样式
+html{
+  font-size: $rootFontSize;
+}
+body{
+  background-color: $bodyBGColor !important;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="import" href="/inlinePart/head.html?__inline"/>
+    <title>gaga的博客</title>
+</head>
+<body>
+    <link rel="import" href="/inlinePart/bodyHeader.html?__inline"/>
+
+    <div class="ui container">
+        <!-- 导航-->
+        <div class="ui huge breadcrumb">
+            <a class="section">文章</a>
+            <i class="right chevron icon divider"></i>
+            <a class="section">全部</a>
+            <i class="right chevron icon divider"></i>
+            <div class="active section">1</div>
+        </div>
+    </div>
+
+    <div class="ui grid container mainArea">
+
+        <div class="twelve wide column">
+            <!-- 文章列表-->
+            <div class="ui items articleList">
+                <div class="item">
+                    <div class="image">
+                        <img src="http://semantic-ui.com/images/wireframe/image.png">
+                    </div>
+                    <div class="content">
+                        <a class="header" href="/article/123">Header</a>
+                        <div class="meta">
+                            <span>Description</span>
+                        </div>
+                        <div class="description">
+                            <p></p>
+                        </div>
+                        <div class="extra">
+                            Additional Details
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="image">
+                        <img src="http://semantic-ui.com/images/wireframe/image.png">
+                    </div>
+                    <div class="content">
+                        <a class="header" href="/article/456">Header</a>
+                        <div class="meta">
+                            <span>Description</span>
+                        </div>
+                        <div class="description">
+                            <p></p>
+                        </div>
+                        <div class="extra">
+                            Additional Details
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分页菜单 -->
+            <div class="page">
+            <div class="ui pagination menu">
+                <a class="icon item">
+                    <i class="left arrow icon"></i>
+                </a>
+                <a class="active item">
+                    1
+                </a>
+                <a class="item">
+                    2
+                </a>
+                <a class="item">
+                    3
+                </a>
+                <a class="item">
+                    4
+                </a>
+                <a class="item">
+                    5
+                </a>
+                <a class="icon item">
+                    <i class="right arrow icon"></i>
+                </a>
+            </div>
+
+            </div>
+        </div>
+
+        <!-- 左边栏 -->
+        <div class="four wide column" ms-controller="infoModel">
+
+            <!-- 文章标签 -->
+            <div class="articleLabel tab">
+                <h3>标签</h3>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+                <p><a href="http://weibo.com/u/2645818343">标签1</a></p>
+            </div>
+
+            <!-- 关于我 -->
+            <div class="masterInfo tab">
+                <h3>关于我</h3>
+                <img class="ui circular image masterHead" ms-click="shockHead" src="http://semantic-ui.com/images/avatar2/large/elyse.png" />
+                <p>前端攻城狮+nodejs程序猿</p>
+                <p><a href="http://weibo.com/u/2645818343">微博</a>,<a href="https://github.com/iamllitog">Github</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <link rel="import" href="/inlinePart/bodyFooter.html?__inline"/>
+    <script src="/internalM/index/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+//---------------静态变量-----------------
+//body背景颜色
+$bodyBGColor : #7FFFD4;
+//边框颜色
+$borderColor : #D3D3D3;
+//根节点字号(UI框架源码)
+$rootFontSize : 14px;
+
+//---------------辅助方法-----------------
+//px转rem
+@function pxTorem($px){
+  @return $px / $rootFontSize *1rem;
+}
