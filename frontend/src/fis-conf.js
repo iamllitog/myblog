@@ -95,7 +95,7 @@ fis.match('*.png',{
     url : '$0',
 });
 //------------------字体------------------
-fis.match('*.{eot,svg,ttf,woff}',{
+fis.match('*.{eot,svg,ttf,woff,woff2}',{
     release : '/static/$0',
     url : '$0',
 });

@@ -8,8 +8,8 @@
  * @require /externalM/jqRaty/jquery.raty.js
  * @require /externalM/avalon/avalon.shim.js
  * @require /externalM/semanticUi/semantic.js
- * @require /internalM/index/index.scss
  * @require /externalM/semanticUi/semantic.css
+ * @require /internalM/article/article.scss
  */
 avalon.ready(function(){
    avalon.define({

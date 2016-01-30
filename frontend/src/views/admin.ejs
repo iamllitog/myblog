@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="import" href="/inlinePart/head.html?__inline"/>
+    <title>我是老大！！！</title>
+</head>
+<body ms-controller="adminModal">
+    <div class="ui bottom attached segment pushable">
+        <div class="ui visible inverted left vertical sidebar menu">
+            <a class="item" ms-class="{{currentTab=='article' ? 'active' : ''}}" ms-click="changeTab('article')">
+                文章管理
+            </a>
+            <a class="item" ms-class="{{currentTab=='label' ? 'active' : ''}}" ms-click="changeTab('label')">
+                文章标签管理
+            </a>
+            <a class="item" ms-class="{{currentTab=='data' ? 'active' : ''}}" ms-click="changeTab('data')">
+                数据查看
+            </a>
+            <a class="item" ms-class="{{currentTab=='comment' ? 'active' : ''}}" ms-click="changeTab('comment')">
+                评论管理
+            </a>
+            <a class="item" ms-class="{{currentTab=='master' ? 'active' : ''}}" ms-click="changeTab('master')">
+                我的信息管理
+            </a>
+        </div>
+
+        <div class="pusher">
+            <!-- 文章管理-->
+            <div class="ui basic segment articleModal" ms-if="currentTab == 'article'" ms-controller="articleModal">
+                <h3 class="ui header">文章管理</h3>
+                <div class="articleList">
+                    <div class="ui form">
+                        <div class="fields">
+                            <div class="field">
+                                <label>关键字搜索</label>
+                                <input placeholder="Keyword" type="text">
+                            </div>
+                            <div class="field">
+                                <label>分类搜索</label>
+                                <select class="ui dropdown">
+                                    <option value="">subject</option>
+                                    <option value="1">分类1</option>
+                                    <option value="2">分类2</option>
+                                    <option value="3">分类3</option>
+                                    <option value="4">分类4</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>&nbsp;</label>
+                                <div class="ui buttons">
+                                    <button class="ui green button">搜索</button>
+                                    <div class="or"></div>
+                                    <button class="ui blue button">写新blog</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui items myArticleList">
+                        <div class="item">
+                            <div class="ui tiny image">
+                                <img src="http://semantic-ui.com/images/wireframe/image.png">
+                            </div>
+                            <div class="content">
+                                <div class="header">12 Years a Slave</div>
+                                <div class="description">
+                                    <div class="ui buttons">
+                                        <button class="ui blue button">编辑</button>
+                                        <button class="ui red button">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 分页菜单 -->
+                    <div class="page">
+                        <div class="ui pagination menu">
+                            <a class="icon item">
+                                <i class="left arrow icon"></i>
+                            </a>
+                            <a class="active item">
+                                1
+                            </a>
+                            <a class="item">
+                                2
+                            </a>
+                            <a class="item">
+                                3
+                            </a>
+                            <a class="item">
+                                4
+                            </a>
+                            <a class="item">
+                                5
+                            </a>
+                            <a class="icon item">
+                                <i class="right arrow icon"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="articleDetal">
+
+                </div>
+            </div>
+            <!-- 文章标签管理-->
+            <div class="ui basic segment" ms-if="currentTab == 'label'">
+                <h3 class="ui header">文章标签管理</h3>
+            </div>
+            <!-- 数据查看-->
+            <div class="ui basic segment" ms-if="currentTab == 'data'">
+                <h3 class="ui header">数据查看</h3>
+            </div>
+            <!-- 评论管理-->
+            <div class="ui basic segment" ms-if="currentTab == 'comment'">
+                <h3 class="ui header">评论管理</h3>
+            </div>
+            <!-- 我的信息管理-->
+            <div class="ui basic segment" ms-if="currentTab == 'master'">
+                <h3 class="ui header">我的信息管理</h3>
+            </div>
+        </div>
+    </div>
+
+<script src="/internalM/admin/admin.js"></script>
+</body>
+</html>

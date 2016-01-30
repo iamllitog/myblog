@@ -1,0 +1,13 @@
+@import "compass";
+@import "/internalM/publicAsset/field";
+
+//文章模块
+.articleModal{
+  .myArticleList{
+    min-height: 500px;
+  }
+  .page{
+    justify-content: center;
+    display: flex;
+  }
+}

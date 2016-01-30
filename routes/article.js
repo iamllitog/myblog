@@ -9,10 +9,12 @@ const articleRoute = router();
 
 //文章路由
 articleRoute.get('/',function *(){
-    console.log(this.path);
     yield this.render('index');
 });
-articleRoute.get('/:id',function *(){
+articleRoute.get('/:label',function *(){
+    yield this.render('index');
+});
+articleRoute.get('/:label/:id',function *(){
     yield this.render('article');
 });
 
