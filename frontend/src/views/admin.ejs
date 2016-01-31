@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="import" href="/inlinePart/head.html?__inline"/>
-    <title>我是老大！！！</title>
+    <title>管理</title>
 </head>
 <body ms-controller="adminModal">
     <div class="ui bottom attached segment pushable">
@@ -28,7 +28,7 @@
             <!-- 文章管理-->
             <div class="ui basic segment articleModal" ms-if="currentTab == 'article'" ms-controller="articleModal">
                 <h3 class="ui header">文章管理</h3>
-                <div class="articleList">
+                <div class="articleList"  ms-visible="!isBlogModal">
                     <div class="ui form">
                         <div class="fields">
                             <div class="field">
@@ -50,7 +50,7 @@
                                 <div class="ui buttons">
                                     <button class="ui green button">搜索</button>
                                     <div class="or"></div>
-                                    <button class="ui blue button">写新blog</button>
+                                    <button class="ui blue button" ms-click="newBlog">写新blog</button>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                 <div class="header">12 Years a Slave</div>
                                 <div class="description">
                                     <div class="ui buttons">
-                                        <button class="ui blue button">编辑</button>
+                                        <button class="ui blue button" ms-click="editBlog">编辑</button>
                                         <button class="ui red button">删除</button>
                                     </div>
                                 </div>
@@ -97,17 +97,51 @@
                                 <i class="right arrow icon"></i>
                             </a>
                         </div>
-
                     </div>
-
                 </div>
-                <div class="articleDetal">
+                <!--文章详情-->
+                <div class="articleDetal" ms-visible="isBlogModal">
+                    <textarea id="editor" placeholder="文章内容" autofocus></textarea>
+                    <div class="ctrlArea">
+                        <div class="ui form">
+                            <div class="inline fields editSubjectgroup">
+                                <div class="field ">
+                                    <label>设置分类:</label>
+                                    <select class="ui dropdown">
+                                        <option value="">subject</option>
+                                        <option value="1">分类1</option>
+                                        <option value="2">分类2</option>
+                                        <option value="3">分类3</option>
+                                        <option value="4">分类4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui buttons editBtgroup">
+                            <button ms-click="cancleEdit" class="ui grey button">取消</button>
+                            <button class="ui green button">保存</button>
+                            <button class="ui red button">删除</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
             <!-- 文章标签管理-->
-            <div class="ui basic segment" ms-if="currentTab == 'label'">
+            <div class="ui basic segment" ms-if="currentTab == 'label'"  ms-controller="labelModal">
                 <h3 class="ui header">文章标签管理</h3>
+                <div class="ui items">
+                    <div class="item">
+                        <div class="content">
+                            <div class="header">12 Years a Slave</div>
+                            <div class="description">
+                                <div class="ui buttons">
+                                    <button class="ui blue button" ms-click="editLabel">编辑</button>
+                                    <button class="ui red button" ms-click="delLabel">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- 数据查看-->
             <div class="ui basic segment" ms-if="currentTab == 'data'">
@@ -123,7 +157,7 @@
             </div>
         </div>
     </div>
+    <script src="/internalM/admin/admin.js"></script>
 
-<script src="/internalM/admin/admin.js"></script>
 </body>
 </html>

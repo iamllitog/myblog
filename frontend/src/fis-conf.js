@@ -14,33 +14,48 @@ fis.match('::package',{
 });
 
 //------------------css打包------------------
-fis.match('{externalM/semanticUi/semantic.css,internalM/bodyHeader/bodyHeader.scss,internalM/bodyFooter/bodyFooter.scss}',{
+fis.match('{externalM/semanticUi/semantic.css,externalM/sweetalert/sweetalert.css,internalM/bodyHeader/bodyHeader.scss,internalM/bodyFooter/bodyFooter.scss}',{
     packTo : '/pkg/pkg.css'
 });
-fis.match('/pkg/pkg.css',{
-    release : '/static/pkg/pkg.css',
+fis.match('/pkg/**.css',{
+    release : '/static/$0',
     url : '$0'
 });
-fis.media('publish').match('/pkg/pkg.css',{
-    release : '/static/pkg/pkg.css',
+fis.media('publish').match('/pkg/**.css',{
+    release : '/static/$0',
     url : '$0',
     optimizer : fis.plugin('clean-css'),
     useHash : true
 });
 
 //------------------js打包------------------
-fis.match('externalM/{jquery,semanticUi/semantic,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers}.js',{
+fis.match('externalM/{jquery,semanticUi/semantic,sweetalert/sweetalert.min,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers}.js',{
     packTo : '/pkg/pkg.js'
+});
+fis.match('externalM/simditor/{hotkeys,module,simditor,uploader}.js',{
+    packTo : '/pkg/editor.js'
 });
 fis.match("externalM/jquery.js",{
     packOrder : -100
 });
-fis.match('/pkg/pkg.js',{
-    release : '/static/pkg/pkg.js',
+fis.match("externalM/simditor/module.js",{
+    packOrder : 1
+});
+fis.match("externalM/simditor/hotkeys.js",{
+    packOrder : 2
+});
+fis.match("externalM/simditor/uploader.js",{
+    packOrder : 3
+});
+fis.match("externalM/simditor/simditor.js",{
+    packOrder : 4
+});
+fis.match('/pkg/**.js',{
+    release : '/static/$0',
     url : '$0'
 });
-fis.media('publish').match('/pkg/pkg.js',{
-    release : '/static/pkg/pkg.js',
+fis.media('publish').match('/pkg/**.js',{
+    release : '/static/$0',
     url : '$0',
     useHash : true,
     optimizer :fis.plugin('uglify-js',{
@@ -127,8 +142,8 @@ fis.match('internalM/**.js',{
             //全局变量忽略--amd
             "$" : false,
             "avalon" : false,
-            "define" : false,
-            "require" : false
+            "swal" : false,
+            "Simditor" : false
         }
     })
 });
@@ -158,8 +173,8 @@ fis.media('publish').match('internalM/**.js',{
             //全局变量忽略
             "$" : false,
             "avalon" : false,
-            "UE" : false,
-            "echarts" : false
+            "swal" : false,
+            "Simditor" : false
         }
     }),
     useHash : true,

@@ -1,6 +1,11 @@
 @import "compass";
 @import "/internalM/publicAsset/field";
 
+//右侧列表
+.pusher{
+  width: 80%;
+}
+
 //文章模块
 .articleModal{
   .myArticleList{
@@ -10,4 +15,20 @@
     justify-content: center;
     display: flex;
   }
+
+  @at-root .articleDetal{
+    .editSubjectgroup{
+      margin-top: pxTorem(15px) !important;
+      justify-content: center;
+    }
+
+    .ctrlArea{
+      text-align: center;
+    }
+
+  }
+
+
+
 }
+
