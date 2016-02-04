@@ -26,7 +26,7 @@ app.keys = config.cookieKeys;
 app.use(gzip());
 //session配置
 app.use(session(Object.assign({
-    store : redisStore()
+    store : redisStore(config.redisOption)
 },config.sessionOption)));
 //设置图标
 app.use(favicon(path.join(__dirname, 'frontend/dist/static/internalM/publicAsset', 'favicon.png')));
