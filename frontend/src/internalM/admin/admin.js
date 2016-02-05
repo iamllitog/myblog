@@ -24,6 +24,7 @@ avalon.ready(() => {
     //初始化方法
     (() => {
         $('select.dropdown').dropdown();
+        $('.ui.accordion').accordion();
         var editor = new Simditor({
             textarea: $('#editor')
         });
