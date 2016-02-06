@@ -95,5 +95,22 @@ avalon.ready(() => {
         }
     });
 
+    //数据模块
+    const dataModal = avalon.define({
+        $id : 'dataModal'
+    });
+
+    //评论模块
+    const commentModal = avalon.define({
+        $id : 'commentModal',
+        isArticleList : true,
+        changeToComment : () => {
+            commentModal.isArticleList = false;
+        },
+        changeToArticle : () => {
+            commentModal.isArticleList = true;
+        }
+    });
+
     avalon.scan();
 });

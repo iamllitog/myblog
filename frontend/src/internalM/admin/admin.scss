@@ -6,14 +6,16 @@
   width: 80%;
 }
 
+//分页
+.page{
+  justify-content: center;
+  display: flex;
+}
+
 //文章模块
 .articleModal{
   .myArticleList{
     min-height: 500px;
-  }
-  .page{
-    justify-content: center;
-    display: flex;
   }
 
   @at-root .articleDetal{
@@ -28,7 +30,13 @@
 
   }
 
+}
 
+//评论模块
+.commentModal{
+  .items{
+    min-height: 500px;
+  }
 
 }
 
