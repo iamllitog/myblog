@@ -438,6 +438,35 @@
             <!-- 我的信息管理-->
             <div class="ui basic segment" ms-if="currentTab == 'master'">
                 <h3 class="ui header">我的信息管理</h3>
+                <div class="ui horizontal divider">我的名字 </div>
+                <form class="ui form">
+                    <div class="field">
+                        <input name="mastname" type="text">
+                    </div>
+                    <button class="ui button">Submit</button>
+                </form>
+                <div class="ui horizontal divider">简介 </div>
+                <form class="ui form">
+                    <div class="field">
+                        <input name="description" type="text" >
+                    </div>
+                    <button class="ui button">Submit</button>
+                </form>
+                <div class="ui horizontal divider">连接 </div>
+                <form class="ui form">
+                    <div class="field" data-name="weibo">
+                        <div class="two fields">
+                            <div class="field">
+                                <input name="linkName" placeholder="连接名" type="text">
+                            </div>
+                            <div class="field">
+                                <input name="linkAddr" placeholder="连接地址" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ui button">New</button>
+                    <button class="ui button">Submit</button>
+                </form>
             </div>
         </div>
     </div>
