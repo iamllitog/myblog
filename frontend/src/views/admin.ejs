@@ -11,7 +11,7 @@
                 文章管理
             </a>
             <a class="item" ms-class="{{currentTab=='label' ? 'active' : ''}}" ms-click="changeTab('label')">
-                文章标签管理
+                文章分类管理
             </a>
             <a class="item" ms-class="{{currentTab=='data' ? 'active' : ''}}" ms-click="changeTab('data')">
                 数据查看
@@ -126,9 +126,9 @@
 
                 </div>
             </div>
-            <!-- 文章标签管理-->
+            <!-- 文章分类管理-->
             <div class="ui basic segment" ms-if="currentTab == 'label'"  ms-controller="labelModal">
-                <h3 class="ui header">文章标签管理</h3>
+                <h3 class="ui header">文章分类管理</h3>
                 <div class="ui items">
                     <div class="item">
                         <div class="content">

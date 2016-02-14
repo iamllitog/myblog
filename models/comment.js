@@ -1,10 +1,12 @@
 /**
  * 评论模型
  */
-const Sequelize = require('sequelize');
 
-module.exports = (sequelize,ArticleModel) => {
-    return sequelize.define('Comment', {
+"use strict";
+const Sequelize = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+    var Comment = sequelize.define("Comment", {
         // 主键
         id : {type : Sequelize.INTEGER, autoIncrement : true, primaryKey : true, unique : true},
 
@@ -22,15 +24,13 @@ module.exports = (sequelize,ArticleModel) => {
 
         // 写评论时间
         birthDate: { type: Sequelize.DATE, defaultValue: Sequelize.NOW , allowNull : false},
-
-        //文章外键
-        article_id: {
-            type: Sequelize.INTEGER,
-            allowNull : false,
-            references: {
-                model: ArticleModel,
-                key: 'id'
+    },{
+        classMethods: {
+            associate: function(models) {
+                Comment.belongsTo(models.Article);
             }
         }
     });
+
+    return Comment;
 };

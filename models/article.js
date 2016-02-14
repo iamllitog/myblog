@@ -1,10 +1,10 @@
 /**
  * 文章模型
  */
-const Sequelize = require('sequelize');
-
-module.exports = (sequelize,TagModel) => {
-    return sequelize.define('Article', {
+"use strict";
+const Sequelize = require("sequelize");
+module.exports = (sequelize,DataTypes) => {
+    var Article = sequelize.define("Article", {
         // 主键
         id : {type : Sequelize.INTEGER, autoIncrement : true, primaryKey : true, unique : true},
 
@@ -19,15 +19,13 @@ module.exports = (sequelize,TagModel) => {
 
         // 编辑这篇博客时间
         editDate: { type: Sequelize.DATE, defaultValue: Sequelize.NOW , allowNull : false},
-
-        //类别外键
-        tag_id: {
-            type: Sequelize.INTEGER,
-            allowNull : false,
-            references: {
-                model: TagModel,
-                key: 'id'
+    },{
+        classMethods: {
+            associate: (models) => {
+                Article.hasMany(models.Comment);
             }
         }
     });
+
+    return Article;
 };

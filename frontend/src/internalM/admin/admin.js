@@ -21,22 +21,34 @@
  */
 avalon.ready(() => {
 
-    //初始化方法
-    (() => {
-        $('select.dropdown').dropdown();
-        $('.ui.accordion').accordion();
-        var editor = new Simditor({
-            textarea: $('#editor')
-        });
-    })();
-
     //主模块
    const adminModal = avalon.define({
        $id : 'adminModal',
        currentTab : 'article',
        changeTab : (tab) => {
            adminModal.currentTab = tab;
-       }
+           adminModal.init();
+       },
+       init : () => {
+           switch (adminModal.currentTab){
+               case 'article':
+                   articleModal.init();
+                   break;
+               case 'label':
+                   labelModal.init();
+                   break;
+               case 'data':
+                   dataModal.init();
+                   break;
+               case 'comment':
+                   commentModal.init();
+                   break;
+               case 'master':
+                   masterModal.init();
+                   break;
+           }
+       },
+       $skipArray: ["init"]
    });
 
     //文章模块
@@ -65,16 +77,17 @@ avalon.ready(() => {
                 }
             });
 
-        }
+        },
+        init: () =>{}
     });
 
-    //标签模块
+    //分类模块
     const labelModal = avalon.define({
         $id : 'labelModal',
         editLabel : (id) => {
             swal({
-                title: "编辑标签!",
-                text: "重命名此标签:",
+                title: "编辑类别!",
+                text: "重命名此类别:",
                 type: "input",
                 showCancelButton: true,
                 closeOnConfirm: false
@@ -92,12 +105,14 @@ avalon.ready(() => {
         },
         delLabel : (id) => {
 
-        }
+        },
+        init: () => {}
     });
 
     //数据模块
     const dataModal = avalon.define({
-        $id : 'dataModal'
+        $id : 'dataModal',
+        init: () =>{}
     });
 
     //评论模块
@@ -109,8 +124,24 @@ avalon.ready(() => {
         },
         changeToArticle : () => {
             commentModal.isArticleList = true;
-        }
+        },
+        init: () =>{}
     });
+
+    //主人模块
+    const masterModal = avalon.define({
+        init: () =>{}
+    });
+
+    //初始化方法
+    (() => {
+        $('select.dropdown').dropdown();
+        $('.ui.accordion').accordion();
+        var editor = new Simditor({
+            textarea: $('#editor')
+        });
+        adminModal.init();
+    })();
 
     avalon.scan();
 });

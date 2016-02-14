@@ -1,10 +1,11 @@
 /**
  * 连接名模型
  */
-const Sequelize = require('sequelize');
+"use strict";
+const Sequelize = require("sequelize");
 
-module.exports = (sequelize,MasterModel) => {
-    return sequelize.define('MasterLink', {
+module.exports = (sequelize, DataTypes) => {
+    var MasterLink = sequelize.define('MasterLink', {
         // 主键
         id : {type : Sequelize.INTEGER, autoIncrement : true, primaryKey : true, unique : true},
 
@@ -12,17 +13,14 @@ module.exports = (sequelize,MasterModel) => {
         name : {type : Sequelize.STRING, unique : true, allowNull : false},
 
         // 连接
-        link : {type : Sequelize.STRING, unique : true, allowNull : false},
+        link : {type : Sequelize.STRING, unique : true, allowNull : false}
 
-        //主人外键
-        master_id: {
-            type: Sequelize.INTEGER,
-            allowNull : false,
-            references: {
-                model: MasterModel,
-                key: 'id'
+    },{
+        classMethods: {
+            associate: function(models) {
+                MasterLink.belongsTo(models.Master);
             }
         }
-
     });
+    return MasterLink;
 };

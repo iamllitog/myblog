@@ -28,12 +28,12 @@ const develop = {
     },
     //数据配置
     dataOption : {
-        dbName : 'myBlog',
-        userName : 'root',
-        password : '',
+        dbName : 'myblog',
+        userName : 'litong',
+        password : '123456',
         mySql : {
-            host : '127.0.0.1',
-            port : '3306',
+            host : process.env.MYSQL_PORT_3306_TCP_ADDR?process.env.MYSQL_PORT_3306_TCP_ADDR: '127.0.0.1',
+            port : process.env.MYSQL_PORT_3306_TCP_PORT?process.env.MYSQL_PORT_3306_TCP_PORT: '3306',
             dialect : 'mysql'
         }
     }
