@@ -32,5 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Comment.sync();
+
     return Comment;
 };

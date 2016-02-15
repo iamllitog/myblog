@@ -34,8 +34,19 @@ const develop = {
         mySql : {
             host : process.env.MYSQL_PORT_3306_TCP_ADDR?process.env.MYSQL_PORT_3306_TCP_ADDR: '127.0.0.1',
             port : process.env.MYSQL_PORT_3306_TCP_PORT?process.env.MYSQL_PORT_3306_TCP_PORT: '3306',
-            dialect : 'mysql'
+            dialect : 'mysql',
+            define : {
+                charset : 'utf8',
+                collate : 'utf8_general_ci'
+            }
         }
+    },
+    //管理员默认信息
+    administratorDefault : {
+        nikename : '苍老是',
+        username : 'justusername',
+        password : 'i am password',
+        description : '苍老是与流传风'
     }
 };
 

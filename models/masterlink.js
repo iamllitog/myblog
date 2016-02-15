@@ -22,5 +22,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     });
+    MasterLink.sync();
     return MasterLink;
 };

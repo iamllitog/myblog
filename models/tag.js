@@ -12,11 +12,13 @@ module.exports = (sequelize) => {
         // 标题
         name : {type : Sequelize.STRING, unique : true, allowNull : false}
     },{
+        freezeTableName : true,
         classMethods: {
             associate: (models) => {
                 Tag.hasMany(models.Article);
             }
         }
     });
+    Tag.sync();
     return Tag;
 };
