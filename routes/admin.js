@@ -12,7 +12,10 @@ const apiRoute = router();
 
 //管理员界面路由
 adminRoute.get('/',function *(){
-    yield this.render('admin');
+    if(this.session.isMaster)
+        yield this.render('admin');
+    else
+        this.redirect('/admin/login');
 });
 
 //管理员登录界面路由
@@ -43,6 +46,7 @@ adminRoute.post('/login',function *(){
         if(!master){
             throw new Error('没有此用户，请重试');
         }
+        this.session.isMaster = true;
         this.redirect('/admin');
     }catch(e){
         yield this.render('adminLogin',{info : e});
@@ -59,10 +63,22 @@ const resData = {
     msg : 'success'
 };
 
+//api过滤器
 apiRoute.all('*',function *(next){
     console.log('api过滤了');
-    this.status = 200;
-    yield next;
+    if(this.session.isMaster){
+        this.status = 200;
+        yield next;
+    }
+    else{
+        this.status = 403;
+        resData.error =true;
+        resData.data =null;
+        resData.msg ='请先登录';
+        this.body = resData;
+    }
+
+
 });
 
 //得到tag
@@ -73,7 +89,7 @@ apiRoute.get('/tag',function *(){
     }catch(e){
         this.status = 500;
         resData.error = true;
-        resData.msg = e.message();
+        resData.msg = e.message;
     }
     this.body = resData;
 });

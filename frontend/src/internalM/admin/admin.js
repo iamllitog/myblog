@@ -106,7 +106,21 @@ avalon.ready(() => {
         delLabel : (id) => {
 
         },
-        init: () => {}
+        init: () => {
+            $.ajax('/admin/api/tag',{
+                dataType : 'json',
+                success : (data) => {
+                    swal(JSON.stringify(data));
+                },error : (xhr) => {
+                    let msg = xhr.responseText;
+                    try{
+                        msg = JSON.parse(msg).msg;
+                    }finally{
+                        swal("报错啦",msg,'error');
+                    }
+                }
+            });
+        }
     });
 
     //数据模块
