@@ -18,8 +18,22 @@
  *
  * @require /externalM/sweetalert/sweetalert.min.js
  * @require /externalM/sweetalert/sweetalert.css
+ *
+ * @require /externalM/lodash.js
  */
 avalon.ready(() => {
+
+    //ajax公共方法，返回promise
+    const ajaxApi = (url,option) => {
+
+        return new Promise((resolve,reject) => {
+            option.success = resolve;
+            option.error = reject;
+
+            $.ajax(url,option);
+        });
+
+    };
 
     //主模块
    const adminModal = avalon.define({
@@ -34,8 +48,8 @@ avalon.ready(() => {
                case 'article':
                    articleModal.init();
                    break;
-               case 'label':
-                   labelModal.init();
+               case 'tag':
+                   tagModal.init();
                    break;
                case 'data':
                    dataModal.init();
@@ -82,42 +96,122 @@ avalon.ready(() => {
     });
 
     //分类模块
-    const labelModal = avalon.define({
-        $id : 'labelModal',
-        editLabel : (id) => {
+    const tagModal = avalon.define({
+        $id : 'tagModal',
+        tagList : [],
+        //新建标签
+        addTag : () => {
             swal({
-                title: "编辑类别!",
-                text: "重命名此类别:",
-                type: "input",
-                showCancelButton: true,
-                closeOnConfirm: false
-            },(labelName) => {
-                if (labelName === false) return false;
+                title : '新建分类',
+                type : 'input',
+                showCancelButton : true,
+                inputPlaceholder : '新建分类名称',
+                closeOnConfirm : false
+            },function(inputValue){
+                inputValue = _.trim(inputValue);
+                if (inputValue === false) return false;
 
-                if (labelName === "") {
-                    swal.showInputError("You need to write something!");
+                if(_.isEmpty(inputValue)){
+                    swal.showInputError('请输入新建类别名称');
                     return false;
                 }
 
-                swal("成功!", "更改为 " + labelName, "success");
-
-            });
-        },
-        delLabel : (id) => {
-
-        },
-        init: () => {
-            $.ajax('/admin/api/tag',{
-                dataType : 'json',
-                success : (data) => {
-                    swal(JSON.stringify(data));
-                },error : (xhr) => {
+                ajaxApi('/admin/api/tag',{
+                    dataType : 'json',
+                    type : 'post',
+                    data : {
+                        name : inputValue
+                    }
+                }).then((data) => {
+                    swal("成功!", `添加类别 ${ inputValue } 成功`, "success");
+                    tagModal.init();
+                }).catch((xhr) => {
                     let msg = xhr.responseText;
                     try{
                         msg = JSON.parse(msg).msg;
                     }finally{
                         swal("报错啦",msg,'error');
                     }
+                });
+
+            });
+        },
+        editTag : (name,id) => {
+            swal({
+                title: "编辑类别!",
+                text: "重命名此类别:",
+                inputPlaceholder : '重命名分类名称',
+                type: "input",
+                closeOnConfirm: false,
+                inputValue : name
+            },(tagName) => {
+                if (tagName === false) return false;
+
+                if (_.isEmpty(tagName)) {
+                    swal.showInputError('请输入重命名类别名称');
+                    return false;
+                }
+
+                ajaxApi('/admin/api/tag/'+id,{
+                    dataType : 'json',
+                    type : 'put',
+                    data : {
+                        name : tagName
+                    }
+                }).then((data) => {
+                    swal("成功!", `更改类别 ${ tagName } 成功`, "success");
+                    tagModal.init();
+                }).catch((xhr) => {
+                    let msg = xhr.responseText;
+                    try{
+                        msg = JSON.parse(msg).msg;
+                    }finally{
+                        swal("报错啦",msg,'error');
+                    }
+                });
+
+            });
+        },
+        delTag : (name,id) => {
+            swal({
+                title : `你确定删除 ${name} 吗？`,
+                type : 'warning',
+                showCancelButton : true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '是的',
+                cancelButtonText:'不',
+                closeOnConfirm : false
+            },(isConfirm) => {
+                if(isConfirm){
+                    ajaxApi('/admin/api/tag/'+id,{
+                        dataType : 'json',
+                        type : 'delete'
+                    }).then((data) => {
+                        swal("成功!", `删除类别 ${ name } 成功`, "success");
+                        tagModal.init();
+                    }).catch((xhr) => {
+                        let msg = xhr.responseText;
+                        try{
+                            msg = JSON.parse(msg).msg;
+                        }finally{
+                            swal("报错啦",msg,'error');
+                        }
+                    });
+                }
+            });
+
+        },
+        init: () => {
+            ajaxApi('/admin/api/tag',{dataType : 'json'})
+            .then((data) => {
+                tagModal.tagList = data.data;
+            })
+            .catch((xhr) => {
+                let msg = xhr.responseText;
+                try{
+                    msg = JSON.parse(msg).msg;
+                }finally{
+                    swal("报错啦",msg,'error');
                 }
             });
         }

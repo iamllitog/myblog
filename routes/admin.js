@@ -6,6 +6,7 @@
 const router = require('koa-router');
 const models  = require('../models');
 const crypto = require('crypto');
+const _ = require('lodash');
 
 const adminRoute = router();
 const apiRoute = router();
@@ -86,6 +87,66 @@ apiRoute.get('/tag',function *(){
     try{
         var tags = yield models.Tag.findAll();
         resData.data = tags;
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData;
+});
+
+//添加tag
+apiRoute.post('/tag',function *(){
+    try{
+        let name = this.request.body.name;
+        if(_.isEmpty(name)){
+            throw new Error('缺少参数name');
+        }
+        yield models.Tag.create({name:name});
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData;
+});
+
+//更新tag
+apiRoute.put('/tag/:id',function *(){
+    try{
+        let id = this.params.id;
+        let name = this.request.body.name;
+        if(_.isEmpty(name)){
+            throw new Error('缺少参数name');
+        }
+        if(_.isEmpty(id)){
+            throw new Error('缺少参数id');
+        }
+        yield models.Tag.update({name:name},{
+            where : {
+                id : id
+            }
+        });
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData;
+});
+
+//删除tag
+apiRoute.del('/tag/:id',function *(){
+    try{
+        let id = this.params.id;
+        if(_.isEmpty(id)){
+            throw new Error('缺少参数id');
+        }
+        yield models.Tag.destroy({
+            where : {
+                id : id
+            }
+        });
     }catch(e){
         this.status = 500;
         resData.error = true;

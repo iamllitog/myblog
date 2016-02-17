@@ -29,7 +29,7 @@ fis.media('publish').match('/pkg/**.css',{
 });
 
 //------------------js打包------------------
-fis.match('externalM/{jquery,semanticUi/semantic,sweetalert/sweetalert.min,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers}.js',{
+fis.match('externalM/{jquery,semanticUi/semantic,sweetalert/sweetalert.min,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers,lodash}.js',{
     packTo : '/pkg/pkg.js'
 });
 fis.match('externalM/simditor/{hotkeys,module,simditor,uploader}.js',{
@@ -143,7 +143,8 @@ fis.match('internalM/**.js',{
             "$" : false,
             "avalon" : false,
             "swal" : false,
-            "Simditor" : false
+            "Simditor" : false,
+            "_" : false
         }
     })
 });

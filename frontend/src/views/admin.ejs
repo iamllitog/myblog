@@ -10,7 +10,7 @@
             <a class="item" ms-class="{{currentTab=='article' ? 'active' : ''}}" ms-click="changeTab('article')">
                 文章管理
             </a>
-            <a class="item" ms-class="{{currentTab=='label' ? 'active' : ''}}" ms-click="changeTab('label')">
+            <a class="item" ms-class="{{currentTab=='tag' ? 'active' : ''}}" ms-click="changeTab('tag')">
                 文章分类管理
             </a>
             <a class="item" ms-class="{{currentTab=='data' ? 'active' : ''}}" ms-click="changeTab('data')">
@@ -127,16 +127,17 @@
                 </div>
             </div>
             <!-- 文章分类管理-->
-            <div class="ui basic segment" ms-if="currentTab == 'label'"  ms-controller="labelModal">
+            <div class="ui basic segment" ms-if="currentTab == 'tag'"  ms-controller="tagModal">
                 <h3 class="ui header">文章分类管理</h3>
+                <button class="ui primary button" ms-click="addTag">新建分类</button>
                 <div class="ui items">
-                    <div class="item">
+                    <div class="item" ms-repeat="tagList">
                         <div class="content">
-                            <div class="header">12 Years a Slave</div>
+                            <div class="header">{{name}}</div>
                             <div class="description">
                                 <div class="ui buttons">
-                                    <button class="ui blue button" ms-click="editLabel">编辑</button>
-                                    <button class="ui red button" ms-click="delLabel">删除</button>
+                                    <button class="ui blue button" ms-click="editTag(el.name,id)">编辑</button>
+                                    <button class="ui red button" ms-click="delTag(el.name,id)">删除</button>
                                 </div>
                             </div>
                         </div>
