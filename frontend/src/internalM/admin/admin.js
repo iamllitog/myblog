@@ -20,6 +20,9 @@
  * @require /externalM/sweetalert/sweetalert.css
  *
  * @require /externalM/lodash.js
+ *
+ * @require /externalM/Jcrop/css/jquery.Jcrop.min.css
+ * @require /externalM/Jcrop/js/jquery.Jcrop.min.js
  */
 avalon.ready(() => {
 
@@ -92,7 +95,20 @@ avalon.ready(() => {
             });
 
         },
-        init: () =>{}
+        init: () => {
+            ajaxApi('/admin/api/tag',{dataType : 'json'})
+                .then((data) => {
+                    tagModal.tagList = data.data;
+                })
+                .catch((xhr) => {
+                    let msg = xhr.responseText;
+                    try{
+                        msg = JSON.parse(msg).msg;
+                    }finally{
+                        swal("报错啦",msg,'error');
+                    }
+                });
+        }
     });
 
     //分类模块

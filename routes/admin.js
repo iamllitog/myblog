@@ -4,8 +4,7 @@
 'use strict';
 
 const router = require('koa-router');
-const models  = require('../models');
-const crypto = require('crypto');
+const modelProxy  = require('../modelProxy');
 const _ = require('lodash');
 
 const adminRoute = router();
@@ -38,13 +37,10 @@ adminRoute.post('/login',function *(){
             throw new Error('缺少密码');
         }
 
-        var master = yield models.Master.find({
-            where : {
-                username : username,
-                password : crypto.createHash('md5').update(password).digest('hex')
-            }
-        });
-        if(!master){
+
+        let hasMaster = yield modelProxy.Master.hasMaster(username,password);
+
+        if(!hasMaster){
             throw new Error('没有此用户，请重试');
         }
         this.session.isMaster = true;
@@ -79,13 +75,12 @@ apiRoute.all('*',function *(next){
         this.body = resData;
     }
 
-
 });
 
 //得到tag
 apiRoute.get('/tag',function *(){
     try{
-        var tags = yield models.Tag.findAll();
+        var tags = yield modelProxy.Tag.getAllTags();
         resData.data = tags;
     }catch(e){
         this.status = 500;
@@ -102,7 +97,7 @@ apiRoute.post('/tag',function *(){
         if(_.isEmpty(name)){
             throw new Error('缺少参数name');
         }
-        yield models.Tag.create({name:name});
+        yield modelProxy.Tag.createTagByName(name);
     }catch(e){
         this.status = 500;
         resData.error = true;
@@ -122,11 +117,7 @@ apiRoute.put('/tag/:id',function *(){
         if(_.isEmpty(id)){
             throw new Error('缺少参数id');
         }
-        yield models.Tag.update({name:name},{
-            where : {
-                id : id
-            }
-        });
+        yield modelProxy.Tag.updateTagById(id,name);
     }catch(e){
         this.status = 500;
         resData.error = true;
@@ -142,11 +133,26 @@ apiRoute.del('/tag/:id',function *(){
         if(_.isEmpty(id)){
             throw new Error('缺少参数id');
         }
-        yield models.Tag.destroy({
-            where : {
-                id : id
-            }
-        });
+
+        //将要删除的类别的
+        yield modelProxy.Article.moveTagArticleToOtherTagByTagId(id);
+        yield modelProxy.Tag.delTagById(id);
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData;
+});
+
+//添加Article
+apiRoute.post('/article',function *(){
+    try{
+        let tagId = this.request.body.tagId;
+        if(_.isEmpty(name)){
+            throw new Error('缺少参数name');
+        }
+        yield modelProxy.Tag.createTagByName(name);
     }catch(e){
         this.status = 500;
         resData.error = true;

@@ -7,6 +7,8 @@ const http = require('http');
 
 const app = require('../app');
 const config = require('../config');
+const models = require('../models');
 
-
-http.createServer(app.callback()).listen(config.port);
+models.initDB().then(() => {
+    http.createServer(app.callback()).listen(config.port);
+});

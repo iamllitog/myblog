@@ -27,7 +27,5 @@ module.exports = (sequelize,DataTypes) => {
         }
     });
 
-    Article.sync();
-
     return Article;
 };

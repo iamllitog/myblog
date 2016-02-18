@@ -26,4 +26,29 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//初始化数据库
+db.initDB = () => {
+    return db.sequelize.sync().then(() => {
+        return db.Master.count();
+    }).then((count) => {
+        if(count === 0){
+            //无：添加默认管理员
+            defaultAdmin.password = crypto.createHash('md5').update(defaultAdmin.password).digest('hex');
+            return db.Master.create(defaultAdmin);
+        }
+        return true;
+    }).then(() => {
+        return db.Tag.find({
+            where : {
+                name : 'other'
+            }
+        });
+    }).then((tag) => {
+        if(!tag)
+            db.Tag.create({name : 'other'});
+        return true;
+    });
+};
+
+
 module.exports = db;
