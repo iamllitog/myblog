@@ -11,6 +11,12 @@ module.exports = (sequelize,DataTypes) => {
         // 标题
         title : {type : Sequelize.STRING, unique : true, allowNull : false},
 
+        // 资源文件夹
+        resDir : {type : Sequelize.STRING, unique : true, allowNull : false},
+
+        // 封面
+        thumb : {type : Sequelize.STRING, unique : true, allowNull : false},
+
         // 文本内容
         content : {type : Sequelize.TEXT, allowNull : false},
 

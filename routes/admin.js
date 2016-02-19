@@ -6,6 +6,11 @@
 const router = require('koa-router');
 const modelProxy  = require('../modelProxy');
 const _ = require('lodash');
+const crypto =  require('crypto');
+const fs = require('fs');
+const path = require('path');
+const del = require('del');
+const config = require('../config');
 
 const adminRoute = router();
 const apiRoute = router();
@@ -54,11 +59,21 @@ adminRoute.post('/login',function *(){
 //api路由
 
 //响应信息模板
-const resData = {
-    error : false,
-    data : {},
-    msg : 'success'
-};
+class ResData {
+    constructor (error,data,msg){
+        this.error = error;
+        this.data = data;
+        this.msg = msg;
+    }
+
+    toJson () {
+        return {
+            error : this.error,
+            data : this.data,
+            msg : this.msg
+        };
+    }
+}
 
 //api过滤器
 apiRoute.all('*',function *(next){
@@ -69,29 +84,28 @@ apiRoute.all('*',function *(next){
     }
     else{
         this.status = 403;
-        resData.error =true;
-        resData.data =null;
-        resData.msg ='请先登录';
-        this.body = resData;
+        this.body = new ResData(true,null,'请先登录').toJson();
     }
 
 });
 
 //得到tag
 apiRoute.get('/tag',function *(){
+    let resData = new ResData(false,null,'success');
     try{
-        var tags = yield modelProxy.Tag.getAllTags();
+        let tags = yield modelProxy.Tag.getAllTags();
         resData.data = tags;
     }catch(e){
         this.status = 500;
         resData.error = true;
         resData.msg = e.message;
     }
-    this.body = resData;
+    this.body = resData.toJson();
 });
 
 //添加tag
 apiRoute.post('/tag',function *(){
+    let resData = new ResData(false,null,'success');
     try{
         let name = this.request.body.name;
         if(_.isEmpty(name)){
@@ -103,11 +117,12 @@ apiRoute.post('/tag',function *(){
         resData.error = true;
         resData.msg = e.message;
     }
-    this.body = resData;
+    this.body = resData.toJson();
 });
 
 //更新tag
 apiRoute.put('/tag/:id',function *(){
+    let resData = new ResData(false,null,'success');
     try{
         let id = this.params.id;
         let name = this.request.body.name;
@@ -123,11 +138,12 @@ apiRoute.put('/tag/:id',function *(){
         resData.error = true;
         resData.msg = e.message;
     }
-    this.body = resData;
+    this.body = resData.toJson();
 });
 
 //删除tag
 apiRoute.del('/tag/:id',function *(){
+    let resData = new ResData(false,null,'success');
     try{
         let id = this.params.id;
         if(_.isEmpty(id)){
@@ -142,13 +158,15 @@ apiRoute.del('/tag/:id',function *(){
         resData.error = true;
         resData.msg = e.message;
     }
-    this.body = resData;
+    this.body = resData.toJson();
 });
 
 //添加Article
 apiRoute.post('/article',function *(){
+    let resData = new ResData(false,null,'success');
     try{
         let tagId = this.request.body.tagId;
+        let name = this.request.body.name;
         if(_.isEmpty(name)){
             throw new Error('缺少参数name');
         }
@@ -158,7 +176,36 @@ apiRoute.post('/article',function *(){
         resData.error = true;
         resData.msg = e.message;
     }
-    this.body = resData;
+    this.body = resData.toJson();
+});
+
+
+//上传原始图片
+const originKoaBody = require('koa-body')({
+    multipart : true,
+    formidable:{
+        uploadDir: path.join(config.articleResPath, 'tmp'),
+        keepExtensions : true
+    }
+});
+apiRoute.post('/originPic',originKoaBody,function *(){
+    let resData = new ResData(false,null,'success');
+    try{
+        let file = this.request.body.files.qqfile;
+        if(!file)
+            throw new Error('缺少文件');
+        if(file.type.indexOf('image') < 0){
+            yield del(file.path);
+            throw new Error('请上传图片文件');
+        }
+
+        resData.data = '/otherRes/tmp/'+file.path.substring(file.path.lastIndexOf('/'));
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData.toJson();
 });
 
 adminRoute.use('/api',apiRoute.routes());

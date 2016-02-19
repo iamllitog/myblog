@@ -107,7 +107,16 @@
                                 <input type="text">
                             </div>
                             <div class="field">
-                                <img id="articleCropImg" src="http://semantic-ui.com/images/wireframe/image.png">
+                                <label>上传封面</label>
+                                <form id="article_titlePicForm" method="post" action="/admin/api/originPic" target="exec_target" enctype="multipart/form-data">
+                                    <input type="file" name="qqfile" id="article_titlePic">
+                                </form>
+                            </div>
+                            <div class="field">
+                                <label>上传图片</label>
+                                <form id="article_PicsForm" method="post" action="/admin/api/originPic" target="exec_target" enctype="multipart/form-data">
+                                    <input type="file" name="qqfile" id="article_Pics">
+                                </form>
                             </div>
                             <div class="inline fields editSubjectgroup">
                                 <div class="field ">
@@ -474,6 +483,13 @@
                     <button class="ui button">Submit</button>
                 </form>
             </div>
+        </div>
+    </div>
+    <iframe style="display: none;" id="exec_target" ms-data-id="picDataId" ms-data-modal="picDataModal" ms-on-load="picLoad" name="exec_target"></iframe>    <!-- 提交表单处理iframe框架 -->
+    <div class="ui modal" id="cropModal">
+        <div class="header">Header</div>
+        <div class="image">
+            <img ms-visible="cropImg != ''" ms-attr-src="cropImg" id="select_img_target"/>
         </div>
     </div>
     <script src="/internalM/admin/admin.js"></script>

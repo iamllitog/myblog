@@ -2,6 +2,7 @@
  * Created by litong on 15-12-29.
  */
 'use strict';
+const path = require('path');
 /**
  * 应用配置文件--开发环境
  */
@@ -10,6 +11,8 @@ const develop = {
     port : 8090,
     //cookie密钥
     cookieKeys : ['why i am ','a array?'],
+    //文章资源文件路径
+    articleResPath : path.join( __dirname,'frontend/static/otherRes'),
     //静态资源缓存时间
     staticRSOption :
     {

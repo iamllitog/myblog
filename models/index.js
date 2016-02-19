@@ -4,6 +4,8 @@ const fs        = require("fs");
 const path      = require("path");
 const Sequelize = require("sequelize");
 const dbOption  = require('../config').dataOption;
+const defaultAdmin = require('../config').administratorDefault;
+const crypto =  require('crypto');
 const sequelize = new Sequelize(dbOption.dbName, dbOption.userName, dbOption.password, dbOption.mySql);
 const db        = {};
 

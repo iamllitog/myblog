@@ -13,7 +13,7 @@ module.exports = {
      * @returns {*}
      */
     moveTagArticleToOtherTagByTagId : function *(oldTagId){
-        return yield models.Article.update({TagId:newTagId},{
+        return yield models.Article.update({TagId:oldTagId},{
             where : {
                 name : 'other'
             }

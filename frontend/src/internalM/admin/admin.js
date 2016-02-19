@@ -26,6 +26,8 @@
  */
 avalon.ready(() => {
 
+    var jcrop_api = null;
+
     //ajax公共方法，返回promise
     const ajaxApi = (url,option) => {
 
@@ -42,6 +44,9 @@ avalon.ready(() => {
    const adminModal = avalon.define({
        $id : 'adminModal',
        currentTab : 'article',
+       picDataModal : '',
+       picDataId : '',
+       cropImg : '',
        changeTab : (tab) => {
            adminModal.currentTab = tab;
            adminModal.init();
@@ -62,6 +67,37 @@ avalon.ready(() => {
                    break;
                case 'master':
                    masterModal.init();
+                   break;
+           }
+       },
+       //ifrem加载完成
+       picLoad : () => {
+           var data = $(window.frames.exec_target.document).text();
+           if(data) {
+               data = JSON.parse(data);
+               if (data.error) {
+                   swal("报错啦",data.msg,'error');
+                   return;
+               }
+           }else{
+               swal("报错啦",'没有响应','error');
+               return;
+           }
+           switch (adminModal.picDataModal){
+               case 'article':
+                   articleModal[adminModal.picDataId+'LoadOver'](data);
+                   break;
+               case 'tag':
+                   tagModal[adminModal.picDataId+'LoadOver'](data);
+                   break;
+               case 'data':
+                   dataModal[adminModal.picDataId+'LoadOver'](data);
+                   break;
+               case 'comment':
+                   commentModal[adminModal.picDataId+'LoadOver'](data);
+                   break;
+               case 'master':
+                   masterModal[adminModal.picDataId+'LoadOver'](data);
                    break;
            }
        },
@@ -88,14 +124,40 @@ avalon.ready(() => {
                 cancelButtonText: "No!",
                 closeOnConfirm: true,
                 closeOnCancel: true
-            },(isConfirm) =>{
+            },(isConfirm) => {
                 if (isConfirm) {
                     articleModal.isBlogModal = false;
                 }
             });
 
         },
+        /**
+         * 上传完成
+         */
+        articleTitlePicLoadOver : (data) => {
+                adminModal.cropImg = data.data;
+                jcrop_api.setImage(adminModal.cropImg);
+                $('#cropModal').modal('show');
+
+
+                //var marinTop = -$('#select_img_modal').height()/2;
+                //var timer = null;
+                //timer = setInterval(function(){
+                //    console.log('test');
+                //    if(marinTop !== -$('#select_img_modal').height()/2){
+                //        clearInterval(timer);
+                //        marinTop = -$('#select_img_modal').height()/2;
+                //        $('#select_img_modal').css('margin-top',marinTop);
+                //    }
+                //},10);
+        },
         init: () => {
+            //提交文件
+            $("#article_titlePic").change(function(){
+                adminModal.picDataModal = 'article';
+                adminModal.picDataId = 'articleTitlePic';
+                if($("#article_titlePic").val() !== '') $("#article_titlePicForm").submit();
+            });
             ajaxApi('/admin/api/tag',{dataType : 'json'})
                 .then((data) => {
                     tagModal.tagList = data.data;
@@ -263,6 +325,13 @@ avalon.ready(() => {
         $('.ui.accordion').accordion();
         var editor = new Simditor({
             textarea: $('#editor')
+        });
+        $('#select_img_target').Jcrop({
+            aspectRatio: 1,
+            keySupport: false,
+            minSize: [ 50, 75 ]
+        },function(){
+            jcrop_api = this;
         });
         adminModal.init();
     })();

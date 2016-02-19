@@ -35,17 +35,17 @@ gulp.task('publishBack',function(){
 
 //默认任务，前端开发任务
 gulp.task('developFrontend',shell.task([
-    'cd frontend/src && fis3 release -d ../dist -wl'
+    'cd frontend/src && fis3 release -d ../ -wl'
 ]));
 
 //默认任务，前端发布任务
 gulp.task('developPublish',shell.task([
-    'cd frontend/src && fis3 release publish -d ../dist -l'
+    'cd frontend/src && fis3 release publish -d ../ -l'
 ]));
 
 //删除前端生成文件
 gulp.task('delFrontDist',function(done){
-    del(['frontend/dist/static'],done);
+    del(['frontend/static/dist','frontend/views'],done);
 });
 
 //默认任务，开发任务
