@@ -135,21 +135,23 @@ avalon.ready(() => {
          * 上传完成
          */
         articleTitlePicLoadOver : (data) => {
-                adminModal.cropImg = data.data;
-                jcrop_api.setImage(adminModal.cropImg);
-                $('#cropModal').modal('show');
+            adminModal.cropImg = data.data;
+            $('#select_img_target').css('height',500);
+            jcrop_api.setOptions({
+                aspectRatio: 1.2,
+                keySupport: false,
+                boxHeight : 500,
+                minSize: [ 96, 80 ]
+            });
+            jcrop_api.setImage(adminModal.cropImg);
+            $('#cropModal').modal('show');
 
-
-                //var marinTop = -$('#select_img_modal').height()/2;
-                //var timer = null;
-                //timer = setInterval(function(){
-                //    console.log('test');
-                //    if(marinTop !== -$('#select_img_modal').height()/2){
-                //        clearInterval(timer);
-                //        marinTop = -$('#select_img_modal').height()/2;
-                //        $('#select_img_modal').css('margin-top',marinTop);
-                //    }
-                //},10);
+            //let documentHeight = document.documentElement.clientHeight;
+            //
+            //setTimeout(function(){
+            //    let top = (documentHeight - $('#cropModal').height())/2 + 20;
+            //    $('#cropModal').css('top',top);
+            //},100);
         },
         init: () => {
             //提交文件
@@ -326,11 +328,7 @@ avalon.ready(() => {
         var editor = new Simditor({
             textarea: $('#editor')
         });
-        $('#select_img_target').Jcrop({
-            aspectRatio: 1,
-            keySupport: false,
-            minSize: [ 50, 75 ]
-        },function(){
+        $('#select_img_target').Jcrop({},function(){
             jcrop_api = this;
         });
         adminModal.init();

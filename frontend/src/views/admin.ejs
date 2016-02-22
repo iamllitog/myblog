@@ -487,9 +487,18 @@
     </div>
     <iframe style="display: none;" id="exec_target" ms-data-id="picDataId" ms-data-modal="picDataModal" ms-on-load="picLoad" name="exec_target"></iframe>    <!-- 提交表单处理iframe框架 -->
     <div class="ui modal" id="cropModal">
-        <div class="header">Header</div>
-        <div class="image">
+        <div class="header">截取图片</div>
+        <div class="image content">
             <img ms-visible="cropImg != ''" ms-attr-src="cropImg" id="select_img_target"/>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                取消
+            </div>
+            <div class="ui positive right labeled icon button">
+                确定
+                <i class="checkmark icon"></i>
+            </div>
         </div>
     </div>
     <script src="/internalM/admin/admin.js"></script>
