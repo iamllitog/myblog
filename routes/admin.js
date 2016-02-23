@@ -10,6 +10,7 @@ const crypto =  require('crypto');
 const fs = require('fs');
 const path = require('path');
 const del = require('del');
+const gm = require('gm');
 const config = require('../config');
 
 const adminRoute = router();
@@ -200,6 +201,38 @@ apiRoute.post('/originPic',originKoaBody,function *(){
         }
 
         resData.data = '/otherRes/tmp/'+file.path.substring(file.path.lastIndexOf('/'));
+    }catch(e){
+        this.status = 500;
+        resData.error = true;
+        resData.msg = e.message;
+    }
+    this.body = resData.toJson();
+});
+//截取原始图片
+apiRoute.put('/originPic',function *(){
+    let resData = new ResData(false,null,'success');
+    try{
+        let body = this.request.body;
+        if(_.isEmpty(body.url)){
+            throw new Error('缺少参数url');
+        }
+        if(_.isEmpty(body.x)){
+            throw new Error('缺少参数x');
+        }
+        if(_.isEmpty(body.y)){
+            throw new Error('缺少参数y');
+        }
+        if(_.isEmpty(body.w)){
+            throw new Error('缺少参数w');
+        }
+        if(_.isEmpty(body.h)){
+            throw new Error('缺少参数h');
+        }
+
+
+        let myPath = path.join(__dirname,'../frontend/static',body.url);
+        console.log(myPath);
+        yield gm(myPath).crop(body.w,body.h,body.x,body.y).write(myPath);
     }catch(e){
         this.status = 500;
         resData.error = true;

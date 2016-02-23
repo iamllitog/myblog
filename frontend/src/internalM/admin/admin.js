@@ -101,6 +101,46 @@ avalon.ready(() => {
                    break;
            }
        },
+       //取消截取图片
+       cancleCrop : (cropImg) => {
+           switch (adminModal.picDataModal){
+               case 'article':
+                   articleModal[adminModal.picDataId+'CancleCrop'](cropImg);
+                   break;
+               case 'tag':
+                   tagModal[adminModal.picDataId+'CancleCrop'](cropImg);
+                   break;
+               case 'data':
+                   dataModal[adminModal.picDataId+'CancleCrop'](cropImg);
+                   break;
+               case 'comment':
+                   commentModal[adminModal.picDataId+'CancleCrop'](cropImg);
+                   break;
+               case 'master':
+                   masterModal[adminModal.picDataId+'CancleCrop'](cropImg);
+                   break;
+           }
+       },
+       //截取图片完成
+       cropImgFinish : (cropImg) => {
+           switch (adminModal.picDataModal){
+               case 'article':
+                   articleModal[adminModal.picDataId+'CropImg'](cropImg);
+                   break;
+               case 'tag':
+                   tagModal[adminModal.picDataId+'CropImg'](cropImg);
+                   break;
+               case 'data':
+                   dataModal[adminModal.picDataId+'CropImg'](cropImg);
+                   break;
+               case 'comment':
+                   commentModal[adminModal.picDataId+'CropImg'](cropImg);
+                   break;
+               case 'master':
+                   masterModal[adminModal.picDataId+'CropImg'](cropImg);
+                   break;
+           }
+       },
        $skipArray: ["init"]
    });
 
@@ -132,6 +172,42 @@ avalon.ready(() => {
 
         },
         /**
+         * 取消截取
+         */
+        articleTitlePicCancleCrop : (cropImgUrl) => {
+            $("#article_titlePic").val('');
+        },
+        /**
+         * 截取完成
+         */
+        articleTitlePicCropImg : (cropImgUrl) => {
+            var jcropData = jcrop_api.tellSelect();
+            if(jcropData.w<50){
+                swal('出错啦','请先选择并截取图片','error');
+            }else
+                ajaxApi('/admin/api/originPic',{
+                    dataType : 'json',
+                    type : 'put',
+                    data : {
+                        url : cropImgUrl,
+                        x:jcropData.x,
+                        y:jcropData.y,
+                        w:jcropData.w,
+                        h:jcropData.h
+                    }
+                }).then((data) => {
+                    swal('成功！','上传成功','success');
+                })
+                .catch((xhr) => {
+                    let msg = xhr.responseText;
+                    try{
+                        msg = JSON.parse(msg).msg;
+                    }finally{
+                        swal("报错啦",msg,'error');
+                    }
+                });
+        },
+        /**
          * 上传完成
          */
         articleTitlePicLoadOver : (data) => {
@@ -146,12 +222,12 @@ avalon.ready(() => {
             jcrop_api.setImage(adminModal.cropImg);
             $('#cropModal').modal('show');
 
-            //let documentHeight = document.documentElement.clientHeight;
-            //
-            //setTimeout(function(){
-            //    let top = (documentHeight - $('#cropModal').height())/2 + 20;
-            //    $('#cropModal').css('top',top);
-            //},100);
+            let documentHeight = document.documentElement.clientHeight;
+
+            setTimeout(function(){
+                let top = (documentHeight - $('#cropModal').height())/2 + 70;
+                $('#cropModal').css('top',top);
+            },100);
         },
         init: () => {
             //提交文件

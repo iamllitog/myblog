@@ -492,10 +492,10 @@
             <img ms-visible="cropImg != ''" ms-attr-src="cropImg" id="select_img_target"/>
         </div>
         <div class="actions">
-            <div class="ui black deny button">
+            <div class="ui black deny button" ms-click="cancleCrop(cropImg)">
                 取消
             </div>
-            <div class="ui positive right labeled icon button">
+            <div class="ui positive right labeled icon button" ms-click="cropImgFinish(cropImg)">
                 确定
                 <i class="checkmark icon"></i>
             </div>

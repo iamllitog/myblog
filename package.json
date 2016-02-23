@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "del": "^2.2.0",
     "ejs": "^2.3.4",
+    "gm": "^1.21.1",
     "koa": "^1.1.2",
     "koa-body": "^1.4.0",
     "koa-errorhandler": "^0.1.1",
@@ -22,7 +24,6 @@
     "koa-static": "^1.5.2",
     "koa-views": "^3.1.0",
     "mysql": "^2.10.2",
-    "del": "^2.2.0",
     "sequelize": "^3.18.0"
   },
   "devDependencies": {
