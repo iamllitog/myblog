@@ -190,7 +190,7 @@ avalon.ready(() => {
                     type : 'put',
                     data : {
                         url : cropImgUrl,
-                        x:jcropData.x,
+                        x : jcropData.x,
                         y:jcropData.y,
                         w:jcropData.w,
                         h:jcropData.h

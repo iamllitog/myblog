@@ -12,6 +12,7 @@ const path = require('path');
 const del = require('del');
 const gm = require('gm');
 const config = require('../config');
+const util = require('./util');
 
 const adminRoute = router();
 const apiRoute = router();
@@ -229,10 +230,9 @@ apiRoute.put('/originPic',function *(){
             throw new Error('缺少参数h');
         }
 
-
         let myPath = path.join(__dirname,'../frontend/static',body.url);
-        console.log(myPath);
-        yield gm(myPath).crop(body.w,body.h,body.x,body.y).write(myPath);
+        yield util.cropImg(myPath,body.x,body.y,body.w,body.h);
+        console.log('fafasdasd')
     }catch(e){
         this.status = 500;
         resData.error = true;
