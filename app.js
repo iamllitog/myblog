@@ -29,20 +29,20 @@ app.use(session(Object.assign({
     store : redisStore(config.redisOption)
 },config.sessionOption)));
 //设置图标
-app.use(favicon(path.join(__dirname, 'frontend/dist/static/internalM/publicAsset', 'favicon.png')));
+app.use(favicon(path.join(__dirname, 'frontend/static/dist/internalM/publicAsset', 'favicon.png')));
 //设置视图
-app.use(views(path.join(__dirname, 'frontend/dist/views'),{
+app.use(views(path.join(__dirname, 'frontend/views'),{
     default :'ejs'
 }));
 //设置静态资源
-app.use(serve(path.join(__dirname, 'frontend/dist/static'),config.staticRSOption));
+app.use(serve(path.join(__dirname, 'frontend/static'),config.staticRSOption));
 //日志
 app.use(logger());
 //请求解析器
 app.use(koaBody());
 //非生成器函数的异常处理，生成器函数异常处理使用try-cache
 app.use(errorHandler({
-    template : 'frontend/dist/views/error.ejs',
+    template : 'frontend/views/error.ejs',
     html : function (err){
         console.log("报错啦:"+err);
     }

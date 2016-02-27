@@ -18,5 +18,6 @@ module.exports = (sequelize) => {
             }
         }
     });
+    Tag.sync();
     return Tag;
 };

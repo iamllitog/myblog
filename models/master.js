@@ -9,8 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         // 主键
         id : {type : Sequelize.INTEGER, autoIncrement : true, primaryKey : true, unique : true},
 
-        // 主人名
-        name : {type : Sequelize.STRING, unique : true, allowNull : false},
+        // 昵称
+        nikename : {type : Sequelize.STRING, allowNull : false},
+
+        // 用户名
+        username : {type : Sequelize.STRING, unique : true, allowNull : false},
+
+        // 密码
+        password : {type : Sequelize.STRING, allowNull : false},
 
         // 文本简介
         description : {type : Sequelize.STRING, allowNull : false}

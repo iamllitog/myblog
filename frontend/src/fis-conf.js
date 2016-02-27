@@ -18,18 +18,18 @@ fis.match('{externalM/semanticUi/semantic.css,externalM/sweetalert/sweetalert.cs
     packTo : '/pkg/pkg.css'
 });
 fis.match('/pkg/**.css',{
-    release : '/static/$0',
-    url : '$0'
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 fis.media('publish').match('/pkg/**.css',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     optimizer : fis.plugin('clean-css'),
     useHash : true
 });
 
 //------------------js打包------------------
-fis.match('externalM/{jquery,semanticUi/semantic,sweetalert/sweetalert.min,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers}.js',{
+fis.match('externalM/{jquery,semanticUi/semantic,sweetalert/sweetalert.min,avalon/avalon.shim,boot/browser-polyfill,boot/external-helpers,lodash}.js',{
     packTo : '/pkg/pkg.js'
 });
 fis.match('externalM/simditor/{hotkeys,module,simditor,uploader}.js',{
@@ -51,12 +51,12 @@ fis.match("externalM/simditor/simditor.js",{
     packOrder : 4
 });
 fis.match('/pkg/**.js',{
-    release : '/static/$0',
-    url : '$0'
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 fis.media('publish').match('/pkg/**.js',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     useHash : true,
     optimizer :fis.plugin('uglify-js',{
         compress:{
@@ -67,8 +67,8 @@ fis.media('publish').match('/pkg/**.js',{
 
 //------------------内部css------------------
 fis.match('internalM/**.scss',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     rExt : '.css',
     useSprite: true,
     parser : fis.plugin('node-sass',{
@@ -78,8 +78,8 @@ fis.match('internalM/**.scss',{
     })
 });
 fis.media('publish').match('internalM/**.scss',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     rExt : '.css',
     useSprite: true,
     parser : fis.plugin('node-sass',{
@@ -106,19 +106,19 @@ fis.match('*.png',{
     optimizer : fis.plugin('png-compressor',{
         type : 'pngquant'
     }),
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 //------------------字体------------------
 fis.match('*.{eot,svg,ttf,woff,woff2}',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 
 //------------------js内部引用------------------
 fis.match('internalM/**.js',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     parser: fis.plugin('babel-5.x',{
         stage : 3,
         externalHelpers : true
@@ -143,13 +143,14 @@ fis.match('internalM/**.js',{
             "$" : false,
             "avalon" : false,
             "swal" : false,
-            "Simditor" : false
+            "Simditor" : false,
+            "_" : false
         }
     })
 });
 fis.media('publish').match('internalM/**.js',{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     parser: fis.plugin('babel-5.x',{
         stage : 3,
         externalHelpers : true
@@ -187,12 +188,12 @@ fis.media('publish').match('internalM/**.js',{
 
 //------------------js外部引用------------------
 fis.match("externalM/**.js",{
-    release : '/static/$0',
-    url : '$0'
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 fis.media('publish').match("externalM/**.js",{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     optimizer : fis.plugin('uglify-js',{
         compress:{
             drop_console : true
@@ -203,12 +204,12 @@ fis.media('publish').match("externalM/**.js",{
 
 //------------------资源外部引用------------------
 fis.match("{externalM/**,!externalM/**.js}",{
-    release : '/static/$0',
-    url : '$0'
+    release : '/static/dist/$0',
+    url : '/dist/$0'
 });
 fis.match("{externalM/**.css,!externalM/**.js}",{
-    release : '/static/$0',
-    url : '$0',
+    release : '/static/dist/$0',
+    url : '/dist/$0',
     optimizer : fis.plugin('clean-css'),
     useHash : true
 });

@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "del": "^2.2.0",
     "ejs": "^2.3.4",
+    "gm": "^1.21.1",
     "koa": "^1.1.2",
     "koa-body": "^1.4.0",
     "koa-errorhandler": "^0.1.1",

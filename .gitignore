@@ -1,5 +1,6 @@
 node_modules/
 .idea/
 .project/
-frontend/dist/
+frontend/static/
+frontend/views/
 dump.rdb

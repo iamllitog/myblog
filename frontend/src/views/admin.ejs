@@ -10,7 +10,7 @@
             <a class="item" ms-class="{{currentTab=='article' ? 'active' : ''}}" ms-click="changeTab('article')">
                 文章管理
             </a>
-            <a class="item" ms-class="{{currentTab=='label' ? 'active' : ''}}" ms-click="changeTab('label')">
+            <a class="item" ms-class="{{currentTab=='tag' ? 'active' : ''}}" ms-click="changeTab('tag')">
                 文章分类管理
             </a>
             <a class="item" ms-class="{{currentTab=='data' ? 'active' : ''}}" ms-click="changeTab('data')">
@@ -39,10 +39,8 @@
                                 <label>分类搜索</label>
                                 <select class="ui dropdown">
                                     <option value="">subject</option>
-                                    <option value="1">分类1</option>
-                                    <option value="2">分类2</option>
-                                    <option value="3">分类3</option>
-                                    <option value="4">分类4</option>
+                                    <option value="all">全部</option>
+                                    <option value="all">全部</option>
                                 </select>
                             </div>
                             <div class="field">
@@ -104,6 +102,22 @@
                     <textarea id="editor" placeholder="文章内容" autofocus></textarea>
                     <div class="ctrlArea">
                         <div class="ui form">
+                            <div class="field">
+                                <label>标题</label>
+                                <input type="text">
+                            </div>
+                            <div class="field">
+                                <label>上传封面</label>
+                                <form id="article_titlePicForm" method="post" action="/admin/api/originPic" target="exec_target" enctype="multipart/form-data">
+                                    <input type="file" name="qqfile" id="article_titlePic">
+                                </form>
+                            </div>
+                            <div class="field">
+                                <label>上传图片</label>
+                                <form id="article_PicsForm" method="post" action="/admin/api/originPic" target="exec_target" enctype="multipart/form-data">
+                                    <input type="file" name="qqfile" id="article_Pics">
+                                </form>
+                            </div>
                             <div class="inline fields editSubjectgroup">
                                 <div class="field ">
                                     <label>设置分类:</label>
@@ -127,16 +141,17 @@
                 </div>
             </div>
             <!-- 文章分类管理-->
-            <div class="ui basic segment" ms-if="currentTab == 'label'"  ms-controller="labelModal">
+            <div class="ui basic segment" ms-if="currentTab == 'tag'"  ms-controller="tagModal">
                 <h3 class="ui header">文章分类管理</h3>
+                <button class="ui primary button" ms-click="addTag">新建分类</button>
                 <div class="ui items">
-                    <div class="item">
+                    <div class="item" ms-repeat="tagList">
                         <div class="content">
-                            <div class="header">12 Years a Slave</div>
+                            <div class="header">{{name}}</div>
                             <div class="description">
                                 <div class="ui buttons">
-                                    <button class="ui blue button" ms-click="editLabel">编辑</button>
-                                    <button class="ui red button" ms-click="delLabel">删除</button>
+                                    <button class="ui blue button" ms-click="editTag(el.name,id)">编辑</button>
+                                    <button class="ui red button" ms-click="delTag(el.name,id)">删除</button>
                                 </div>
                             </div>
                         </div>
@@ -467,6 +482,22 @@
                     <button class="ui button">New</button>
                     <button class="ui button">Submit</button>
                 </form>
+            </div>
+        </div>
+    </div>
+    <iframe style="display: none;" id="exec_target" ms-data-id="picDataId" ms-data-modal="picDataModal" ms-on-load="picLoad" name="exec_target"></iframe>    <!-- 提交表单处理iframe框架 -->
+    <div class="ui modal" id="cropModal">
+        <div class="header">截取图片</div>
+        <div class="image content">
+            <img ms-visible="cropImg != ''" ms-attr-src="cropImg" id="select_img_target"/>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button" ms-click="cancleCrop(cropImg)">
+                取消
+            </div>
+            <div class="ui positive right labeled icon button" ms-click="cropImgFinish(cropImg)">
+                确定
+                <i class="checkmark icon"></i>
             </div>
         </div>
     </div>
