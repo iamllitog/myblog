@@ -17,8 +17,8 @@ const develop = {
     },
     //redis 配置
     redisOption : {
-        host : process.env.REDIS_PORT_6379_TCP_ADDR?process.env.REDIS_PORT_6379_TCP_ADDR: '127.0.0.1',
-        port : process.env.REDIS_PORT_6379_TCP_PORT?process.env.REDIS_PORT_6379_TCP_PORT: 6379
+        host : process.env.REDIS_PORT_6379_TCP_ADDR ? process.env.REDIS_PORT_6379_TCP_ADDR: '127.0.0.1',
+        port : process.env.REDIS_PORT_6379_TCP_PORT ? process.env.REDIS_PORT_6379_TCP_PORT: 6379
     },
     //session 配置
     sessionOption : {
