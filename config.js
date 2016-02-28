@@ -35,8 +35,8 @@ const develop = {
         userName : 'litong',
         password : '123456',
         mySql : {
-            host : process.env.MYSQL_PORT_3306_TCP_ADDR?process.env.MYSQL_PORT_3306_TCP_ADDR: '127.0.0.1',
-            port : process.env.MYSQL_PORT_3306_TCP_PORT?process.env.MYSQL_PORT_3306_TCP_PORT: '3306',
+            host : process.env.MYSQL_PORT_3306_TCP_ADDR ? process.env.MYSQL_PORT_3306_TCP_ADDR: '127.0.0.1',
+            port : process.env.MYSQL_PORT_3306_TCP_PORT ? process.env.MYSQL_PORT_3306_TCP_PORT: '3306',
             dialect : 'mysql',
             define : {
                 charset : 'utf8',

@@ -232,7 +232,6 @@ apiRoute.put('/originPic',function *(){
 
         let myPath = path.join(__dirname,'../frontend/static',body.url);
         yield util.cropImg(myPath,body.x,body.y,body.w,body.h);
-        console.log('fafasdasd')
     }catch(e){
         this.status = 500;
         resData.error = true;

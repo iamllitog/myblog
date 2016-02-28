@@ -14,14 +14,13 @@ module.exports = {
      * @returns {Promise}
      */
     cropImg : function (path,x,y,w,h){
-        //return new Promise((resolve,reject) => {
+        return new Promise((resolve,reject) => {
             gm(path).crop(w,h,x,y).write(path,(err) => {
-                throw new Error('fafa');
-                //if(err)
-                //    reject(err);
-                //else
-                //    resolve();
+                if(err)
+                    reject(err);
+                else
+                    resolve();
             });
-        //});
+        });
     }
 };
